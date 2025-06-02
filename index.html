@@ -1,4 +1,43 @@
-<HR>
-My name: 王智弘 <BR>
-My SID: C113181148<BR>
-    My Frist GitHUB.IO Progject
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <title>PowerShell 八卦占卜機（網頁版）</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; background: #f4f4f4; }
+    pre { font-size: 1.2em; }
+  </style>
+</head>
+<body>
+  <h1>🔮 PowerShell 八卦占卜機（網頁版）</h1>
+  <button onclick="drawGua()">擲卦</button>
+  <div id="result"></div>
+
+  <script>
+    const guaMap = {
+      "111111": "乾卦（天）→ 剛健自強，萬事起頭吉",
+      "000000": "坤卦（地）→ 柔順藏德，宜靜不宜動",
+      "010001": "屯卦（水雷）→ 初時困難，須積極努力",
+      "100010": "蒙卦（山水）→ 學習摸索，小心前行",
+      "001000": "需卦（天水）→ 靜待時機，不宜躁進",
+      "110111": "大壯卦（雷天）→ 展現實力，適合突破",
+      "111000": "大有卦（天火）→ 成功在望，應積極把握",
+      "000111": "謙卦（地山）→ 內斂謙遜，宜忍耐"
+      // 可持續補充完整64卦
+    };
+
+    function drawGua() {
+      const yaos = Array.from({ length: 6 }, () => Math.round(Math.random()));
+      let lines = yaos.map(v => v === 1 ? "——— 陽爻" : "— — 陰爻").reverse().join("<br>");
+      const upper = "" + yaos[5] + yaos[4] + yaos[3];
+      const lower = "" + yaos[2] + yaos[1] + yaos[0];
+      const guaKey = upper + lower;
+      const meaning = guaMap[guaKey] || "未知卦象，表示事情變化多端，請另擇良機。";
+      document.getElementById("result").innerHTML = `
+        <p><strong>你得到的卦象如下（由下至上）：</strong><br><pre>${lines}</pre></p>
+        <p><strong>🌟 卦象解釋：</strong> ${meaning}</p>
+      `;
+    }
+  </script>
+</body>
+</html>
